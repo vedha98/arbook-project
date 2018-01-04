@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+   <a class="navbar-brand" href="#">My Login App</a>
+  <div class="container" >
+    <ul class="navbar-nav  navbar-right">
+  <li class="nav-item" [routerLinkActive]="['active']">
+    <a class="nav-link"  [routerLink]="['/']">Home</a>
+  </li>
+</ul>
+</div>
+     <div class="container-fluid" >
+       <ul class="navbar-nav  navbar-right">
+         <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!authService.loggedIn()">
+           <a class="nav-link"  [routerLink]="['/login']">Login</a>
+         </li>
+         <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!authService.loggedIn()">
+           <a class="nav-link"  [routerLink]="['/register']">Register</a>
+         </li>
+         <li class="nav-item" [routerLinkActive]="['active']" *ngIf="authService.loggedIn()">
+           <a class="nav-link" (click) = "onLogoutClick()" href="#">logout</a>
+         </li>
+         <li class="nav-item" [routerLinkActive]="['active']" *ngIf="authService.loggedIn()">
+           <a class="nav-link" [routerLink]="['/profile']" href="#">Profile</a>
+         </li>
+         <li class="nav-item" [routerLinkActive]="['active']" *ngIf="authService.loggedIn()">
+           <a class="nav-link" [routerLink]="['/dashboard']" href="#">Dashboard</a>
+         </li>
+       </ul>
+
+     </div>
+   </nav>

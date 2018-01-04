@@ -39,6 +39,9 @@ app.use('/users',users);
 app.get("/",(req,res)=>{
   res.send("fnfffn");
 });
+app.get("*",(req,res)=>{
+  res.redirect("/");
+});
 
 app.listen(port,()=>{
   console.log("running on port 3000");

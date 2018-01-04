@@ -178,7 +178,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  dashboard works!\n</p>\n"
+module.exports = "<div class=\"container\">\n  <button type=\"button btn btn-default\" name=\"button\">create new</button>\n</div>\n"
 
 /***/ }),
 

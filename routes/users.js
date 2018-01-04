@@ -34,13 +34,14 @@ router.post('/register', (req, res, next) => {
         }
         else{
 
-
+var randomNumber = Math.floor(Math.random() * 200000*100000);
       let newUser = new User({
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
-        validation: false
+        validation: false,
+        random: randomNumber
       });
 
       User.addUser(newUser, (err, user) => {
@@ -56,7 +57,7 @@ router.post('/register', (req, res, next) => {
         from: 'vetha.gnanam98@gmail.com',
         to: newUser.email,
         subject: 'Verification of your account',
-        text: 'Click on this link to verify your account http://localhost:3000/users/validate?token='+user._id+'    this is required for your login'
+        text: 'Click on this link to verify your account https://dry-cove-59464.herokuapp.com/users/validate?token='+user.random+'    this is required for your login'
       };
 
 //sending mail

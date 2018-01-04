@@ -7,6 +7,9 @@ const UserSch = mongoose.Schema({
   name:{
     type:String
   },
+  random:{
+    type:String
+  },
   validation:{
     type:Boolean
   },
@@ -77,7 +80,7 @@ bcryptjs.compare(canditatePass,hash,(err,isMatch)=>{
 };
 
 module.exports.Update = function (id,detail,callback) {
-  var query = { _id: id };
+  var query = { random: id };
 
   User.findOneAndUpdate(query, {$push: {"posts":{name:detail.name,
   body:detail.body}}},{safe: true, upsert: true, new: true},(err,user)=>{
@@ -86,8 +89,8 @@ module.exports.Update = function (id,detail,callback) {
 
 };
 module.exports.Validate = function (user,callback) {
-var query = { _id:user.token};
-console.log(user);
+var query = { random:user.token};
+console.log(query);
 User.findOneAndUpdate(query,{"validation":true},(err,user)=>{
 callback(err,this.User);
 } );

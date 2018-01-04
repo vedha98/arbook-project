@@ -34,7 +34,7 @@ router.post('/register', (req, res, next) => {
         }
         else{
 
-var randomNumber = Math.floor(Math.random() * 200000*100000);
+var randomNumber = Math.floor(Math.random() *200000*100000*200000*100000*200000*100000);
       let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -130,7 +130,7 @@ router.get('/validate', (req, res, next) => {
 console.log(req.query.token);
   User.Validate(req.query,(err,cs)=>{
   console.log(err);
- return res.redirect('/')
+ return res.redirect('http://rowdycoder.tk')
  });
 });
 

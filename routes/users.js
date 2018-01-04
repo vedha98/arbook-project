@@ -130,7 +130,7 @@ router.get('/validate', (req, res, next) => {
 console.log(req.query.token);
   User.Validate(req.query,(err,cs)=>{
   console.log(err);
- return res.redirect('http://rowdycoder.tk')
+ return res.redirect('http://rowdycoder.tk/')
  });
 });
 

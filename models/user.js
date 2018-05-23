@@ -84,7 +84,7 @@ bcryptjs.compare(canditatePass,hash,(err,isMatch)=>{
   callback(err,isMatch);
 })
 };
-
+// adding posts
 module.exports.Update = function (id,detail,callback) {
   var query = { random: id };
 
@@ -129,6 +129,35 @@ if(user[0]){
 
 };
 
+//no of users
+module.exports.numUsers = function (details,callback) {
+  var userMap = [];
+var noUsers = 0;
+
+
+    User.find({}, function(err, users) {
+
+itemsprocessed = 0;
+      users.forEach(function(user) {
+  const aa = user.products;
+        aa.forEach((us)=>{
+
+if(us.body == details.body){noUsers+=1};
+itemsprocessed++;
+          userMap.push(us);
+
+        })
+
+if (itemsprocessed==aa.length){callback(noUsers)}
+      });
+
+  });
+
+
+
+
+
+}
 module.exports.checkEmailExist = function (user,callback) {
 const query = {email:user.email}
 console.log(user);

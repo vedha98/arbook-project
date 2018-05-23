@@ -86,6 +86,7 @@ res.send(val);
   });
 
 })
+
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
   const username = req.body.username;
@@ -157,13 +158,16 @@ router.get('/validate', (req, res, next) => {
  return res.redirect('http://the_website.com/')
  });
 });
-
+// Register new product
 router.put('/update', function(req, res) {
-
-User.Update(req.body.id,req.body.details,(err,msg)=>{
+User.numUsers(req.body.details,(num)=>{ console.log(num);
+if(num>1){return res.json({success: "false" ,msg: "Maximum number of users reached"});}else{User.Update(req.body.id,req.body.details,(err,msg)=>{
 if(err) throw err;
-  return res.json({msg: "success"});
-})
+ return res.json({success:"true",msg: "added successfully"});
+})}
+
+  });
+
 });
 
 module.exports = router;

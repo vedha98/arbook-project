@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 
 //setting up nodemailer
 var transporter = nodemailer.createTransport({
-  service: 'Yahoo',
+  service: 'Gmail',
   auth: {
-    user: 'vetha.gnanam98@yahoo.com',
-    pass: 'ellelvethA123#'
+    user: 'vetha.gnanam98@gmail.com',
+    pass: 'ellelvethAqwe123#'
   }
 });
 
@@ -35,7 +35,7 @@ router.post('/register', (req, res, next) => {
         }
         else{
 
-var randomNumber = Math.floor(Math.random() *200000*100000*200000*100000*200000*100000);
+var randomNumber = Math.floor(Math.random() *200000*200000*100000);
       let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -58,7 +58,7 @@ var randomNumber = Math.floor(Math.random() *200000*100000*200000*100000*200000*
         from: 'new gen labs',
         to: newUser.email,
         subject: 'Verification of your account',
-        text: 'Click on this link to verify your account website = '+user.random+'    this is required for your login'
+        text: 'Click on this link to verify your account website = '+"http://localhost:8080/users/validate?token=" +user.random+'    this is required for your login'
       };
 
 //sending mail
@@ -116,14 +116,14 @@ router.post('/authenticate', (req, res, next) => {
       }else {
 
 
-    
+
         //mail content
 
               var mailOptions1 = {
                 from: 'new gen labs',
                 to: user.email,
                 subject: 'Verification of your account',
-                text: 'Click on this link to verify your account website = '+'    this is required for your login'
+                text: 'Click on this link to verify your account website = '+"http://localhost:8080/users/validate?token=" +user.random+'    this is required for your login'
               };
 
         //sending mail

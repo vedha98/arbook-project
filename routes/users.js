@@ -6,11 +6,12 @@ const config = require('../config/database');
 const User = require('../models/user');
 const nodemailer = require('nodemailer');
 
+
 //setting up nodemailer
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'Yahoo',
   auth: {
-    user: 'rowdycoder019@gmail.com',
+    user: 'vetha.gnanam98@yahoo.com',
     pass: 'ellelvethA123#'
   }
 });
@@ -54,10 +55,10 @@ var randomNumber = Math.floor(Math.random() *200000*100000*200000*100000*200000*
 //mail content
 
       var mailOptions = {
-        from: 'vetha.gnanam98@gmail.com',
+        from: 'new gen labs',
         to: newUser.email,
         subject: 'Verification of your account',
-        text: 'Click on this link to verify your account https://dry-cove-59464.herokuapp.com/users/validate?token='+user.random+'    this is required for your login'
+        text: 'Click on this link to verify your account website = '+user.random+'    this is required for your login'
       };
 
 //sending mail
@@ -79,7 +80,7 @@ var randomNumber = Math.floor(Math.random() *200000*100000*200000*100000*200000*
 //get all posts
 
 router.get('/posts', (req, res, next) => {
-User.getAllPosts(req,(val) => {
+User.getAllProducts(req,(val) => {
 console.log(val);
 res.send(val);
   });
@@ -113,6 +114,29 @@ router.post('/authenticate', (req, res, next) => {
           }
         });
       }else {
+
+
+    
+        //mail content
+
+              var mailOptions1 = {
+                from: 'new gen labs',
+                to: user.email,
+                subject: 'Verification of your account',
+                text: 'Click on this link to verify your account website = '+'    this is required for your login'
+              };
+
+        //sending mail
+
+              transporter.sendMail(mailOptions1, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+
+console.log(user.email);
           return res.json({success: false, msg: 'Please verify your account'});
       }
       } else {
@@ -121,16 +145,16 @@ router.post('/authenticate', (req, res, next) => {
     });
   });
 });
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json(req.user);
 });
-
+// validating email
 router.get('/validate', (req, res, next) => {
-console.log(req.query.token);
   User.Validate(req.query,(err,cs)=>{
   console.log(err);
- return res.redirect('http://rowdycoder.tk/')
+ return res.redirect('http://the_website.com/')
  });
 });
 

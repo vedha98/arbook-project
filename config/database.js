@@ -1,2 +1,2 @@
-module.exports = {database:'mongodb://admin:admin@ds133627.mlab.com:33627/todoapp',
+module.exports = {database:'mongodb://localhost:27017/unity',
 secret:'secrets'};

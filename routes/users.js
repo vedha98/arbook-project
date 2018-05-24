@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Product = require('../models/products');
 const nodemailer = require('nodemailer');
 
 
@@ -79,7 +80,7 @@ var randomNumber = Math.floor(Math.random() *200000*200000*100000);
 });
 //get all posts
 
-router.get('/posts', (req, res, next) => {
+router.get('/products', (req, res, next) => {
 User.getAllProducts(req,(val) => {
 console.log(val);
 res.send(val);
@@ -150,6 +151,36 @@ console.log(user.email);
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json(req.user);
+});
+//add product
+router.post('/getproduct', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+Product.productexist(req.body.id,(err,callback)=>{
+  if(err) throw err;
+console.log(callback);
+if(callback){
+  return res.json({success: true, msg: 'Product found',product:{
+    name:callback.name,
+    id:callback.body
+  }});
+}else{
+  return res.json({success: false, msg: 'No Products found'});
+}
+})
+
+
+});
+//get product
+router.post('/addproduct', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  let newproduct = new Product({
+    name:req.body.name,
+    body:req.body.id
+  });
+Product.addproduct(newproduct,(err,product)=>{
+    if(err) throw err;
+    console.log(product);
+})
+
+return res.json({success: true, msg: 'Created Successfully'});
 });
 // validating email
 router.get('/validate', (req, res, next) => {

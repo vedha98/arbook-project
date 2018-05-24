@@ -153,11 +153,42 @@ if (itemsprocessed==aa.length){callback(noUsers)}
 
   });
 
+}
 
 
+//no of users
+module.exports.productregistered = function (details,id,callback) {
+  var userMap = [];
+var exists = false;
 
+
+    User.find({}, function(err, users) {
+
+itemsprocessed = 0;
+var Already = false;
+      users.forEach(function(user) {
+
+        if(user.random == id){
+          Already = true;
+        }
+  const aa = user.products;
+        aa.forEach((us)=>{
+
+if(Already==true && us.body == details.body){exists = true;callback(exists);return;};
+itemsprocessed++;
+          userMap.push(us);
+
+        })
+
+if (itemsprocessed==aa.length){if(!exists){callback(exists)}}
+      });
+
+  });
 
 }
+
+
+
 module.exports.checkEmailExist = function (user,callback) {
 const query = {email:user.email}
 console.log(user);

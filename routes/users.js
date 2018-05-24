@@ -191,32 +191,44 @@ router.get('/validate', (req, res, next) => {
 });
 // Register new product
 router.post('/update',passport.authenticate('jwt',{session:false}), function(req, res) {
-  User.productregistered(req.body.details,req.body.id,(exist)=>{
-    if(exist){
-      return res.json({
-        success: "false" ,
-        msg: "Already registered in this account"
-      });
-    }else{
-      User.numUsers(req.body.details,(num)=>{ console.log(num);
-
-      if(num>1){
+Product.productexist(req.body.details.body,(err,callback)=>{
+  console.log(callback);
+  if(!callback){
+    return res.json({
+      success: "false" ,
+      msg: "Not a valid code"
+    });
+  }else{
+    User.productregistered(req.body.details,req.body.id,(exist)=>{
+      if(exist){
         return res.json({
           success: "false" ,
-          msg: "Maximum number of users reached"
+          msg: "Already registered in this account"
         });
       }else{
-        User.Update(req.body.id,req.body.details,(err,msg)=>{
-      if(err) throw err;
-       return res.json({
-         success:"true",
-         msg: "added successfully"
-       });
-      })}
+        User.numUsers(req.body.details,(num)=>{ console.log(num);
 
-        });
-    }
-  })
+        if(num>1){
+          return res.json({
+            success: "false" ,
+            msg: "Maximum number of users reached"
+          });
+        }else{
+          User.Update(req.body.id,req.body.details,(err,msg)=>{
+        if(err) throw err;
+         return res.json({
+           success:"true",
+           msg: "added successfully"
+         });
+        })}
+
+          });
+      }
+    })
+  }
+})
+
+
 
 
 });

@@ -159,7 +159,7 @@ router.get('/validate', (req, res, next) => {
  });
 });
 // Register new product
-router.put('/update', function(req, res) {
+router.post('/update',passport.authenticate('jwt',{session:false}), function(req, res) {
 User.numUsers(req.body.details,(num)=>{ console.log(num);
 if(num>1){return res.json({success: "false" ,msg: "Maximum number of users reached"});}else{User.Update(req.body.id,req.body.details,(err,msg)=>{
 if(err) throw err;

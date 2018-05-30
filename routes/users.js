@@ -152,36 +152,7 @@ console.log(user.email);
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json(req.user);
 });
-//add product
-router.post('/getproduct', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-Product.productexist(req.body.id,(err,callback)=>{
-  if(err) throw err;
 
-if(callback){
-  return res.json({success: true, msg: 'Product found',product:{
-    name:callback.name,
-    id:callback.body
-  }});
-}else{
-  return res.json({success: false, msg: 'No Products found'});
-}
-})
-
-
-});
-//get product
-router.post('/addproduct', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  let newproduct = new Product({
-    name:req.body.name,
-    body:req.body.id
-  });
-Product.addproduct(newproduct,(err,product)=>{
-    if(err) throw err;
-
-})
-
-return res.json({success: true, msg: 'Created Successfully'});
-});
 // validating email
 router.get('/validate', (req, res, next) => {
   User.Validate(req.query,(err,cs)=>{

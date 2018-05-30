@@ -22,7 +22,7 @@ var transporter = nodemailer.createTransport({
 // Register
 router.post('/register', (req, res, next) => {
   User.checkUserExist(req.body,(isTrue)=>{
-    console.log(isTrue);
+
 
     if (isTrue) {
         res.json({success: false, msg:'Username Aready taken'});
@@ -185,7 +185,7 @@ return res.json({success: true, msg: 'Created Successfully'});
 // validating email
 router.get('/validate', (req, res, next) => {
   User.Validate(req.query,(err,cs)=>{
-  console.log(err);
+
  return res.redirect('http://the_website.com/')
  });
 });
@@ -195,14 +195,14 @@ Product.productexist(req.body.details.body,(err,callback)=>{
 
   if(!callback){
     return res.json({
-      success: "false" ,
+      success: false ,
       msg: "Not a valid code"
     });
   }else{
     User.productregistered(req.body.details,req.body.id,(exist)=>{
       if(exist){
         return res.json({
-          success: "false" ,
+          success: false ,
           msg: "Already registered in this account"
         });
       }else{
@@ -210,14 +210,14 @@ Product.productexist(req.body.details.body,(err,callback)=>{
 
         if(num>1){
           return res.json({
-            success: "false" ,
+            success: false ,
             msg: "Maximum number of users reached"
           });
         }else{
           User.Update(req.body.id,req.body.details,(err,msg)=>{
         if(err) throw err;
          return res.json({
-           success:"true",
+           success:true,
            msg: "added successfully"
          });
         })}
@@ -234,8 +234,39 @@ Product.productexist(req.body.details.body,(err,callback)=>{
 });
 
 router.post('/validateconnection',passport.authenticate('jwt',{session:false}),function(req,res){
-  console.log(req.body.ip);
-  return res.json(req.query);
+
+
+
+  User.checkConnections(req.user,req.body.ip,(callback)=>{
+
+    if(callback==true){
+     return res.json({
+        success:true,
+        msg:"the device has been verified  successfully"
+        });
+    }else if(callback==false){
+      User.checkmaxconnection(req.user,(callback)=>{
+        if(callback==true){
+          return res.json({
+            success:false,
+            msg:"maximum number of users reached"
+            });
+        }else if(callback == false){
+          User.setnewconnection(req.user,req.body.ip,(err,callback)=>{
+if(err) throw err;
+  return res.json({
+    success:true,
+    msg:"new device verified successfully"
+    });
+
+
+
+            })
+        }
+        })
+    }
+    })
+
 
 
 
@@ -243,11 +274,14 @@ router.post('/validateconnection',passport.authenticate('jwt',{session:false}),f
 
 
   })
-  router.put('/logoutalldevices',passport.authenticate('jwt',{session:false}),function(req,res){
-console.log("connected devices");
+  router.post('/logoutalldevices',passport.authenticate('jwt',{session:false}),function(req,res){
+User.logoutalldevices(req.user,(err,callback)=>{
+
+  })
+
 return res.json({
-  success:"true",
-  msg: "get connected devices"
+  success:true,
+  msg: "logged out from all devices"
 });
 
 

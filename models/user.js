@@ -27,11 +27,8 @@ const UserSch = mongoose.Schema({
   },
 products:[{
   name: String,
-  body: String }],
-
-connections:{
-  type:Number
-  },
+  body: String
+  }],
 conndevices:[{
   ip:String
   }]
@@ -117,7 +114,7 @@ return true;
 //check user exist
 module.exports.checkUserExist = function (user,callback) {
 const query = {username:user.username}
-console.log(user);
+
 email = null;
 urname = null;
 User.find(query,(err,user)=>{
@@ -200,7 +197,6 @@ if (itemsprocessed==aa.length){if(!exists){callback(exists)}}
 
 module.exports.checkEmailExist = function (user,callback) {
 const query = {email:user.email}
-console.log(user);
 email = null;
 urname = null;
 User.find(query,(err,user)=>{
@@ -220,3 +216,68 @@ if(user[0]){
 
 
 };
+
+
+module.exports.checkConnections = function(user,ip,callback){
+const query = {email:user.email}
+var loggedin = false;
+var processeditems = 0;
+
+User.findOne(query,(err,user)=>{
+  if(err) throw err;
+
+
+const ips = user.conndevices;
+ips.forEach((userip)=>{
+  if(userip.ip==ip){
+    processeditems++;
+    loggedin = true;
+  }
+  })
+
+
+    console.log(loggedin);
+      callback(loggedin);
+  
+
+  })
+
+}
+
+module.exports.checkmaxconnection = function(user,callback){
+const query = {email:user.email}
+var number = 0;
+var maxreached = false;
+User.findOne(query,(err,user)=>{
+  if(err) throw err;
+  const ips = user.conndevices;
+  ips.forEach((userip)=>{
+  number++
+    });
+    if(number>1){
+      maxreached = true;
+    }
+  callback(maxreached);
+
+  })
+
+
+}
+
+module.exports.setnewconnection = function(user,userip,callback){
+  const query = {email:user.email}
+  console.log("set new connections")
+  User.findOneAndUpdate(query, {$push: {"conndevices":{ip:userip,
+}}},{safe: true, upsert: true, new: true},(err,user)=>{
+  callback(err,this.User)
+  } );
+
+}
+
+
+module.exports.logoutalldevices = function(user,callback){
+  const query = {email: user.email}
+  User.findOneAndUpdate(query,{conndevices:[]},{},(err,user)=>{
+    callback(err,this.user);
+    })
+}

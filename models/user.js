@@ -27,7 +27,16 @@ const UserSch = mongoose.Schema({
   },
 products:[{
   name: String,
-  body: String }]
+  body: String }],
+
+connections:{
+  type:Number
+  },
+conndevices:[{
+  ip:String
+  }]
+
+
 })
 
 const User = module.exports = mongoose.model('Users',UserSch);
@@ -59,8 +68,8 @@ module.exports.getUserById = function (id,callback) {
 };
 
 //get User by username
-module.exports.getUserByUsername = function (name,callback) {
-  const query = {username:name};
+module.exports.getUserByEmail = function (mail,callback) {
+  const query = {email:mail};
 
   User.findOne(query,callback);
 

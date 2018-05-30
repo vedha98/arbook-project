@@ -90,9 +90,9 @@ res.send(val);
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-  const username = req.body.username;
+  const username = req.body.email;
   const password = req.body.password;
-  User.getUserByUsername(username, (err, user) => {
+  User.getUserByEmail(username, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
@@ -156,7 +156,7 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 router.post('/getproduct', passport.authenticate('jwt', {session:false}), (req, res, next) => {
 Product.productexist(req.body.id,(err,callback)=>{
   if(err) throw err;
-console.log(callback);
+
 if(callback){
   return res.json({success: true, msg: 'Product found',product:{
     name:callback.name,
@@ -177,7 +177,7 @@ router.post('/addproduct', passport.authenticate('jwt', {session:false}), (req, 
   });
 Product.addproduct(newproduct,(err,product)=>{
     if(err) throw err;
-    console.log(product);
+
 })
 
 return res.json({success: true, msg: 'Created Successfully'});
@@ -192,7 +192,7 @@ router.get('/validate', (req, res, next) => {
 // Register new product
 router.post('/update',passport.authenticate('jwt',{session:false}), function(req, res) {
 Product.productexist(req.body.details.body,(err,callback)=>{
-  console.log(callback);
+
   if(!callback){
     return res.json({
       success: "false" ,
@@ -232,5 +232,26 @@ Product.productexist(req.body.details.body,(err,callback)=>{
 
 
 });
+
+router.post('/validateconnection',passport.authenticate('jwt',{session:false}),function(req,res){
+  console.log(req.body.ip);
+  return res.json(req.query);
+
+
+
+
+
+
+  })
+  router.put('/logoutalldevices',passport.authenticate('jwt',{session:false}),function(req,res){
+console.log("connected devices");
+return res.json({
+  success:"true",
+  msg: "get connected devices"
+});
+
+
+    })
+
 
 module.exports = router;

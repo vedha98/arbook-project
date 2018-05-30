@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname,'client')));
 
 //body parser middleware
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded());
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());

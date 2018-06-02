@@ -1,7 +1,7 @@
 {
-  "name": "mean-auth",
+  "name": "arbook",
   "version": "1.0.0",
-  "description": "a mean authentication",
+  "description": "a authentication",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vedha98/mean-auth.git"
+    "url": "git+https://github.com/vedha98/arbook-project.git"
   },
   "author": "vedhagnanam",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vedha98/mean-auth/issues"
+    "url": "https://github.com/vedha98/arbook-project/issues"
   },
-  "homepage": "https://github.com/vedha98/mean-auth#readme",
+  "homepage": "https://github.com/vedha98/arbook-project#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -29,12 +29,6 @@
     "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1"
-  },
-  "devDependencies": {
-    "gulp": "^3.8.7",
-    "gulp-jshint": "^1.8.4",
-    "gulp-livereload": "^2.1.1",
-    "gulp-nodemon": "^1.0.4",
-    "gulp-watch": "^0.6.9"
   }
+
 }

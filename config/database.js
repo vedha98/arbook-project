@@ -1,2 +1,2 @@
-module.exports = {database:'mongodb://localhost:27017/unitybook',
+module.exports = {database:'mongodb://admin:password123@ds016118.mlab.com:16118/newgenesislabs',
 secret:'secrets'};
